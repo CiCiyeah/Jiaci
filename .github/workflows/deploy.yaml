@@ -1,0 +1,21 @@
+name: Deploy to server
+on:
+  push:
+    branches: [ main ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: npm install
+    - name: Build code
+      run: npm run build
+    - name: Deploy code
+      uses: easingthemes/ssh-deploy@v2.2.2
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        ssh-public-key: ${{ secrets.SSH_PUBLIC_KEY }}
+        server-ip: <your server IP>
+        server-user: <your server username>
+        remote-destination-folder: <your remote folder>
