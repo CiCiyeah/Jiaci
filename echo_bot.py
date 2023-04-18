@@ -5,6 +5,8 @@ import asyncio
 import requests
 import pymysql
 
+commands = ['help', 'visit']
+
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
 
@@ -25,6 +27,10 @@ async def cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     else:
         await context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
+        comm = update.message.text[1:]
+        if not comm in commands:
+            await context.bot.send_message(chat_id=update.effective_chat.id,\
+                                           text='(command not found)')
 
 if __name__ == '__main__':
     # bot = telegram.Bot("6152224720:AAGdDJiHJcycI2qg07y1qiHGSjwJHVOg1xs")
